@@ -1,0 +1,89 @@
+
+  <%= form_with(model: employee) do |form| %>
+    <% if employee.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+  
+        <ul>
+          <% employee.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div>
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name %>
+    </div>
+  
+    <div>
+    <%= form.label :lastname, style: "display: block" %>
+    <%= form.text_field :lastname %>
+  </div>
+
+    <div>
+      <%= form.label :companyID, style: "display: block" %>
+      <%= form.text_field :companyID %>
+    </div>
+
+    <div>
+      <%= form.label :phone, style: "display: block" %>
+      <%= form.text_field :phone %>
+    </div>
+
+    <div>
+      <%= form.label :function, style: "display: block" %>
+      <%= form.text_field :function %>
+    </div>
+
+    <div>
+      <%= form.label :pswdSmartlocker, style: "display: block" %>
+      <%= form.text_field :pswdSmartlocker %>
+    </div>
+
+    <div>
+      <%= form.label :cardRFID, style: "display: block" %>
+      <%= form.text_field :cardRFID %>
+    </div>
+
+    <div>
+      <%= form.label :status, style: "display: block" %>
+      <%= form.text_field :status %>
+    </div>
+  
+    <%= form.fields_for :workdays do |workday_fields| %>
+      <div class="field">
+      <%= workday_fields.label :dayofweek %>
+        <% ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].each do |day| %>
+          <%= check_box_tag 'employee[workdays_attributes][0][dayofweek][]', day, workday_fields.object.dayofweek.include?(day) %>
+          <%= label_tag "employee[workdays_attributes][0][dayofweek][]_#{day}", day %><br>
+        <% end %>
+      </div>
+  
+      <div class="field">
+        <%= workday_fields.label :start %>
+        <%= workday_fields.time_field :start %>
+      </div>
+  
+      <div class="field">
+        <%= workday_fields.label :end %>
+        <%= workday_fields.time_field :end %>
+      </div>
+  
+      <div class="field">
+        <%= workday_fields.label :holiday %>
+        <%= workday_fields.check_box :holiday %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :profile_picture %>
+      <%= form.file_field :profile_picture %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+  

@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Keylockers</h1>
+
+<% if current_user.admin? %>
+  <p>Você é um administrador.</p>
+<% else %>
+  <p>Você é um usuário regular.</p>
+<% end %>
+
+<%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+
+<div id="keylockers">
+  <% @keylockers.each do |keylocker| %>
+    <%= render keylocker %>
+    <p>
+      <%= link_to "Show this keylocker", keylocker %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New keylocker", new_keylocker_path %>
+

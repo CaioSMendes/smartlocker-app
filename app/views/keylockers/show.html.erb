@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @keylocker %>
+
+<div>
+  <%= link_to "Edit this keylocker", edit_keylocker_path(@keylocker) %> |
+  <%= link_to "Back to keylockers", keylockers_path %>
+
+  <%= button_to "Destroy this keylocker", @keylocker, method: :delete %>
+</div>

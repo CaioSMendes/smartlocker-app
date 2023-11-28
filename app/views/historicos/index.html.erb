@@ -1,0 +1,21 @@
+<!-- app/views/historicos/index.html.erb -->
+<h1>Históricos</h1>
+
+<div class="historico-list">
+  <% @historicos.each do |historico| %>
+    <div class="historico">
+      <p><strong>Name:</strong> <%= historico.employee_info["name"] %></p>
+      <p><strong>Lastname:</strong> <%= historico.employee_info["lastname"] %></p>
+      <p><strong>Datetime:</strong> <%= Time.parse(historico.employee_info["datetime"]).strftime('%d/%m/%Y %H:%M:%S') %></p>
+
+        <% historico.employee_info["keylockers"].each do |keylocker| %>
+          <p><strong>Name do locker:</strong> <%= keylocker["keylocker_name"]%></p>
+        <% end %>
+
+      <p><strong>Message:</strong> <%= historico.message %></p>
+    </div>
+
+    <!-- Adiciona uma linha em branco entre os registros -->
+    <div class="spacer"></div>
+  <% end %>
+</div>

@@ -1,0 +1,51 @@
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Email</th>
+      <th>Atribuir Keylocker</th>
+      <th>Remover Keylocker</th>
+      <th>Keylockers Atribuídos</th>
+      <th>Status de Atribuição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td>
+          <%= form_tag assign_keylocker_user_locker_path(user), method: :post do %>
+            <%= hidden_field_tag :user_id, user.id %>
+            <% available_keylockers = Keylocker.where.not(id: user.keylocker_ids) %>
+            <%= select_tag :keylocker_id, options_for_select(available_keylockers.map { |k| [k.nameDevice, k.id] }) %>
+            <%= submit_tag 'Atribuir Keylocker' %>
+          <% end %>
+        </td>
+        <td>
+        <% user.keylockers.each do |keylocker| %>
+          <%= form_tag remove_keylocker_user_locker_path(user, keylocker), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= hidden_field_tag 'user_id', user.id %>
+            <%= hidden_field_tag :keylocker_id, keylocker.id %>
+            <%= submit_tag "Remover #{keylocker.nameDevice}" %>
+          <% end %>
+        <% end %>
+        </td>
+        <td>
+          <ul>
+            <% user.keylockers.each do |keylocker| %>
+              <li><%= keylocker.nameDevice %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <% if user.keylockers.present? %>
+            Atribuído
+          <% else %>
+            Não atribuído
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

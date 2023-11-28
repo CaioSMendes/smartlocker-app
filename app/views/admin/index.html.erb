@@ -1,0 +1,77 @@
+<!-- app/views/employees/index.html.erb -->
+
+<h1>Lista de Funcionários</h1>
+
+<% @employees.each do |employee| %>
+  <div id="<%= dom_id employee %>">
+  <p>
+    <strong>Owner:</strong>
+    <%= employee.user.nameCompany || 'N/A' %>
+    <%= employee.user.name || 'N/A' %>
+    <%= employee.user.lastname || 'N/A' %>
+  </p>
+
+    <p>
+      <strong>Name:</strong>
+      <%= employee.name || 'N/A' %>
+    </p>
+
+    <p>
+      <strong>Lastname:</strong>
+      <%= employee.lastname || 'N/A' %>
+    </p>
+
+
+    <!-- Outros detalhes do funcionário -->
+
+    <p>
+      <strong>Keylockers:</strong>
+      <% if employee.keylockers.any? %>
+        <ul>
+          <% employee.keylockers.each do |keylocker| %>
+            <li>
+              <%= keylocker.nameDevice %> - <%= keylocker.status %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        Nenhum keylocker associado.
+      <% end %>
+    </p>
+
+    <!-- Mais detalhes do funcionário se necessário -->
+  </div>
+
+  <hr>
+<% end %>
+
+
+
+
+Tabela de Employees x Keylockers
+
+<!-- Na sua view de Employee -->
+<h1>Employees and their Associated Lockers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Locker ID</th>
+      <th>Locker Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <% employee.keylockers.each do |keylocker| %>
+        <tr>
+          <td><%= employee.id %></td>
+          <td><%= employee.name %></td>
+          <td><%= keylocker.id %></td>
+          <td><%= keylocker.nameDevice %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

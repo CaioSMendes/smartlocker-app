@@ -1,0 +1,11 @@
+# config/locales/pt.yml
+pt:
+  date:
+    day_names: 
+      - Domingo
+      - Segunda
+      - Terça
+      - Quarta
+      - Quinta
+      - Sexta
+      - Sábado

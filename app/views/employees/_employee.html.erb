@@ -1,0 +1,76 @@
+<div id="<%= dom_id employee %>">
+  <p>
+    <strong>Name:</strong>
+    <%= employee.name %>
+  </p>
+
+  <p>
+    <strong>Lastname:</strong>
+    <%= employee.lastname %>
+  </p>
+
+  <p>
+    <strong>Companyid:</strong>
+    <%= employee.companyID %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    <%= employee.phone %>
+  </p>
+
+  <p>
+    <strong>Function:</strong>
+    <%= employee.function %>
+  </p>
+
+  <p>
+    <strong>Pin:</strong>
+    <%= employee.PIN %>
+  </p>
+
+  <p>
+    <strong>Pswdsmartlocker:</strong>
+    <%= employee.pswdSmartlocker %>
+  </p>
+
+  <p>
+    <strong>Cardrfid:</strong>
+    <%= employee.cardRFID %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= employee.status %>
+  </p>
+
+  <% employee.workdays.each do |workday| %>
+
+  <p>
+    <strong>Dia da semana:</strong>
+    <%= workday.dayofweek%>
+  </p>
+
+  <p>
+    <strong>Hora de inicio</strong>
+    <%= workday.start %>
+  </p>
+
+  <p>
+    <strong>Hora de termino:</strong>
+    <%= workday.end %>
+  </p>
+
+  <p>
+    <strong>Feriado</strong>
+    <%= workday.holiday ? 'Yes' : 'No' %>
+  </p>
+
+  <% if employee.profile_picture.attached? %>
+  <%= image_tag employee.profile_picture %>
+  <% else %>
+    <p>Nenhuma imagem disponível</p>
+  <% end %>
+
+  <% end %>
+</div>

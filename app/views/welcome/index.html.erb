@@ -1,0 +1,17 @@
+<h1>Welcome#index</h1>
+<p>Find me in app/views/welcome/index.html.erb</p>
+
+<%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+
+
+<% if current_user.admin? %>
+  <p>Você é um administrador.</p>
+  <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+  <%= link_to "New keylocker", new_keylocker_path %>
+  <%= link_to "Atribuir locker", user_lockers_path %>
+  <%= link_to "Ver funconarios", admin_path %>
+<% else %>
+  <p>Você é um usuário regular.</p>
+  <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+    <%= link_to "New employee", new_employee_path %>
+<% end %>

@@ -1,0 +1,37 @@
+<%= form_with(model: keylocker) do |form| %>
+  <% if keylocker.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(keylocker.errors.count, "error") %> prohibited this keylocker from being saved:</h2>
+
+      <ul>
+        <% keylocker.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :owner, style: "display: block" %>
+    <%= form.text_field :owner %>
+  </div>
+
+  <div>
+    <%= form.label :nameDevice, style: "display: block" %>
+    <%= form.text_field :nameDevice %>
+  </div>
+
+  <div>
+    <%= form.label :ipAddress, style: "display: block" %>
+    <%= form.text_field :ipAddress %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
