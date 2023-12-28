@@ -1,0 +1,8 @@
+1 - Criar a imagem do docker:
+    docker build -t smartlocker-app .
+
+2 - Subir a imagem do docker:
+docker tag smartlocker-app:latest caio96k/smartlocker-app:1.0
+
+3 - Subir a imagem do docker:
+docker push caio96k/smartlocker-app:1.0

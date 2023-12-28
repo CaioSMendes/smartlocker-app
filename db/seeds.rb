@@ -41,7 +41,7 @@ user = User.create!(
   zip_code: "85859-490",
   neighborhood: "Brazil",
   finance: "adimplente",
-  role: 'admin',
+  role: 'user',
   complement: "Casa 27",
   password: 'user123',
   password_confirmation: 'user123'
