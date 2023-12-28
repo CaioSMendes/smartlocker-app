@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_22_171232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,17 +42,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "addresses", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "street"
-    t.string "city"
-    t.string "state"
-    t.string "zip_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_addresses_on_user_id"
-  end
-
   create_table "employees", force: :cascade do |t|
     t.string "name"
     t.string "lastname"
@@ -79,6 +68,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
     t.index ["keylocker_id"], name: "index_employees_keylockers_on_keylocker_id"
   end
 
+  create_table "history_entries", force: :cascade do |t|
+    t.string "owner"
+    t.string "name_device"
+    t.json "employee_info"
+    t.json "keys_taken", default: []
+    t.json "keys_returned", default: []
+    t.json "sequence_order", default: []
+    t.string "datahistory"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "keylockers", force: :cascade do |t|
     t.string "owner"
     t.string "nameDevice"
@@ -100,6 +101,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
     t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "allocated_keys"
+    t.text "positions_text"
   end
 
   create_table "user_lockers", force: :cascade do |t|
@@ -126,6 +129,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
     t.string "lastname"
     t.string "cnpj"
     t.string "nameCompany"
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "neighborhood"
+    t.string "finance"
+    t.string "complement"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -143,7 +153,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_202837) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "users"
   add_foreign_key "employees", "users"
   add_foreign_key "employees_keylockers", "employees"
   add_foreign_key "employees_keylockers", "keylockers"

@@ -1,6 +1,6 @@
 <%= form_with(model: keylocker) do |form| %>
   <% if keylocker.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(keylocker.errors.count, "error") %> prohibited this keylocker from being saved:</h2>
 
       <ul>
@@ -10,28 +10,45 @@
       </ul>
     </div>
   <% end %>
+<div class="row">
+  <div class="col-md-8 mb-4">
+    <div class="card mb-4">
+      <div class="card-header py-3">
+        <h5 class="mb-0">Cadastrar um novo locker</h5>
+      </div>
+      <div class="card-body">
+        <form>
+          <!-- 2 column grid layout with text inputs for the first and last names -->
+          <!-- Text input -->
+          <div class="form-outline mb-4">
+            <%= form.label :Proprietário_do_Locker, class: "form-label" %>
+            <%= form.text_field :owner, id: 'form7Example3', class: 'form-control' %>
+          </div>
 
-  <div>
-    <%= form.label :owner, style: "display: block" %>
-    <%= form.text_field :owner %>
-  </div>
+          <!-- Text input -->
+          <div class="form-outline mb-4">
+            <%= form.label :Nome_do_Locker, class: "form-label" %>
+            <%= form.text_field :nameDevice, id: 'form7Example3', class: 'form-control' %>
+          </div>
 
-  <div>
-    <%= form.label :nameDevice, style: "display: block" %>
-    <%= form.text_field :nameDevice %>
-  </div>
+          <!-- Text input -->
+          <div class="form-outline mb-4">
+            <%= form.label :Endereço_de_IP, class: "form-label" %>
+            <%= form.text_field :ipAddress, id: 'form7Example3', class: 'form-control' %>
+          </div>
 
-  <div>
-    <%= form.label :ipAddress, style: "display: block" %>
-    <%= form.text_field :ipAddress %>
-  </div>
+          <div class="d-flex">
+            <div class="form-group mr-2">
+              <%= form.submit 'Cadastrar Locker', class: 'btn btn-primary' %>
+            </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
+            <div class="form-group">
+              <%= link_to "Voltar", keylockers_path, class: 'btn btn-success' %>
+            </div> 
+          </div>
 
-  <div>
-    <%= form.submit %>
+        <% end %>
+        </form>
+      </div>
+    </div>
   </div>
-<% end %>

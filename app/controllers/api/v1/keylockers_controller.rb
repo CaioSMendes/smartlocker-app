@@ -2,6 +2,8 @@
 module Api
     module V1
       class KeylockersController < ApplicationController
+        skip_before_action :verify_authenticity_token, only: [:new, :create, :update]
+        skip_before_action :authenticate_user!, only: [:new, :create, :update]
         protect_from_forgery with: :null_session
 
         # GET /keylockers or /keylockers.json

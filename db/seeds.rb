@@ -10,25 +10,41 @@
 # Crie um usuário administrador
 admin = User.create!(
   email: 'admin@admin.com',
+  name:"Caio",
+  lastname:"Mendes",
+  phone: "453526-3939",
+  cnpj:"26.958.914/0001-53",
+  nameCompany:"Lex Coporate",
+  street: "Foz do Iguaçu",
+  city: "Foz do Iguaçu",
+  state: "Paraná",
+  zip_code: "85859-490",
+  neighborhood: "Brazil",
+  finance: "adimplente",
+  role: 'admin',
+  complement: "Casa 27",
   password: 'admin123',
-  password_confirmation: 'admin123',
-  role: 'admin'
-)
-
-# Criar keylockers
-Keylocker.create(
-  owner: Faker::Name.name,
-  nameDevice: Faker::Device.model_name,
-  ipAddress: Faker::Internet.ip_v4_address,
-  status: ['Ativo', 'Inativo'].sample
+  password_confirmation: 'admin123'
 )
 
 # Crie um usuário regular
 user = User.create!(
   email: 'user@user.com',
+  name:"Caio",
+  lastname:"Mendes",
+  phone: "453526-3939",
+  cnpj:"26.958.914/0001-53",
+  nameCompany:"Lex Coporate",
+  street: "Foz do Iguaçu",
+  city: "Foz do Iguaçu",
+  state: "Paraná",
+  zip_code: "85859-490",
+  neighborhood: "Brazil",
+  finance: "adimplente",
+  role: 'admin',
+  complement: "Casa 27",
   password: 'user123',
-  password_confirmation: 'user123',
-  role: 'user'
+  password_confirmation: 'user123'
 )
 
 

@@ -1,51 +1,68 @@
-<table>
-  <thead>
-    <tr>
-      <th>User ID</th>
-      <th>Email</th>
-      <th>Atribuir Keylocker</th>
-      <th>Remover Keylocker</th>
-      <th>Keylockers Atribuídos</th>
-      <th>Status de Atribuição</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
+<p style="color: green"><%= notice %></p>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-user-plus"></i> Atribuir Lockers</h1>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= user.id %></td>
-        <td><%= user.email %></td>
-        <td>
-          <%= form_tag assign_keylocker_user_locker_path(user), method: :post do %>
-            <%= hidden_field_tag :user_id, user.id %>
-            <% available_keylockers = Keylocker.where.not(id: user.keylocker_ids) %>
-            <%= select_tag :keylocker_id, options_for_select(available_keylockers.map { |k| [k.nameDevice, k.id] }) %>
-            <%= submit_tag 'Atribuir Keylocker' %>
-          <% end %>
-        </td>
-        <td>
-        <% user.keylockers.each do |keylocker| %>
-          <%= form_tag remove_keylocker_user_locker_path(user, keylocker), method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <%= hidden_field_tag 'user_id', user.id %>
-            <%= hidden_field_tag :keylocker_id, keylocker.id %>
-            <%= submit_tag "Remover #{keylocker.nameDevice}" %>
-          <% end %>
-        <% end %>
-        </td>
-        <td>
-          <ul>
-            <% user.keylockers.each do |keylocker| %>
-              <li><%= keylocker.nameDevice %></li>
-            <% end %>
-          </ul>
-        </td>
-        <td>
-          <% if user.keylockers.present? %>
-            Atribuído
-          <% else %>
-            Não atribuído
-          <% end %>
-        </td>
+        <th>Email</th>
+        <th>Nome</th>
+        <th>Atribuir Locker</th>
+        <th>Remover Locker</th>
+        <th>Lockers Atribuídos</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.name %></td>
+          <td>
+            <%= form_tag assign_keylocker_user_locker_path(user), method: :post do %>
+              <%= hidden_field_tag :user_id, user.id %>
+              <% available_keylockers = Keylocker.where.not(id: user.keylocker_ids) %>
+              <%= select_tag :keylocker_id, options_for_select(available_keylockers.map { |k| [k.nameDevice, k.id] }) %>
+              <%= submit_tag 'Atribuir Locker', class: 'btn btn-primary' %>
+            <% end %>
+          </td>
+          <td>
+            <% user.keylockers.each do |keylocker| %>
+              <%= form_tag remove_keylocker_user_locker_path(user, keylocker), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <%= hidden_field_tag 'user_id', user.id %>
+                <%= hidden_field_tag :keylocker_id, keylocker.id %>
+                <%= submit_tag "Remover #{keylocker.nameDevice}", class: 'btn btn-danger mt-3' %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <ul>
+              <% user.keylockers.each do |keylocker| %>
+                <li><%= keylocker.nameDevice %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="text-center mt-3 d-flex justify-content-center">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <%= will_paginate @keylockers, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </ul>
+  </nav>
+</div>

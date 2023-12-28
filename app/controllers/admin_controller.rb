@@ -5,4 +5,8 @@ class AdminController < ApplicationController
       @employees = Employee.includes(:user).all
       @users = User.all.includes(:keylockers, employee: :keylocker)
     end
+
+    def dadosuser
+      @users = [current_user] # Cria um array contendo apenas o usuário atual
+    end
 end

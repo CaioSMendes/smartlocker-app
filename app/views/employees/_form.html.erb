@@ -1,89 +1,151 @@
+<%= form_with(model: employee) do |form| %>
+  <% if employee.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
 
-  <%= form_with(model: employee) do |form| %>
-    <% if employee.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
-  
-        <ul>
-          <% employee.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  
-    <div>
-      <%= form.label :name, style: "display: block" %>
-      <%= form.text_field :name %>
-    </div>
-  
-    <div>
-    <%= form.label :lastname, style: "display: block" %>
-    <%= form.text_field :lastname %>
-  </div>
-
-    <div>
-      <%= form.label :companyID, style: "display: block" %>
-      <%= form.text_field :companyID %>
-    </div>
-
-    <div>
-      <%= form.label :phone, style: "display: block" %>
-      <%= form.text_field :phone %>
-    </div>
-
-    <div>
-      <%= form.label :function, style: "display: block" %>
-      <%= form.text_field :function %>
-    </div>
-
-    <div>
-      <%= form.label :pswdSmartlocker, style: "display: block" %>
-      <%= form.text_field :pswdSmartlocker %>
-    </div>
-
-    <div>
-      <%= form.label :cardRFID, style: "display: block" %>
-      <%= form.text_field :cardRFID %>
-    </div>
-
-    <div>
-      <%= form.label :status, style: "display: block" %>
-      <%= form.text_field :status %>
-    </div>
-  
-    <%= form.fields_for :workdays do |workday_fields| %>
-      <div class="field">
-      <%= workday_fields.label :dayofweek %>
-        <% ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].each do |day| %>
-          <%= check_box_tag 'employee[workdays_attributes][0][dayofweek][]', day, workday_fields.object.dayofweek.include?(day) %>
-          <%= label_tag "employee[workdays_attributes][0][dayofweek][]_#{day}", day %><br>
+      <ul>
+        <% employee.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
-      </div>
-  
-      <div class="field">
-        <%= workday_fields.label :start %>
-        <%= workday_fields.time_field :start %>
-      </div>
-  
-      <div class="field">
-        <%= workday_fields.label :end %>
-        <%= workday_fields.time_field :end %>
-      </div>
-  
-      <div class="field">
-        <%= workday_fields.label :holiday %>
-        <%= workday_fields.check_box :holiday %>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= form.label :profile_picture %>
-      <%= form.file_field :profile_picture %>
-    </div>
-
-    <div>
-      <%= form.submit %>
+      </ul>
     </div>
   <% end %>
-  
+  <div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Cadastrar novo funcionário</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Nome, class: "form-label" %>
+                  <%= form.text_field :name, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Sobrenome, class: "form-label" %>
+                  <%= form.text_field :lastname, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <%= form.label :Nome_da_Empresa, class: "form-label" %>
+              <%= form.text_field :companyID, id: 'form7Example3', class: 'form-control' %>
+            </div>
+
+            <div class="row mb-4">
+
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Telefone, class: "form-label" %>
+                  <%= form.text_field :phone, id: 'phoneNumberInput', class: 'form-control', oninput: "handleInputChange()" %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Cargo, class: "form-label" %>
+                  <%= form.text_field :function, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <%= form.fields_for :workdays do |workday_fields| %>
+              <div class="field">
+                <%= workday_fields.label :Dias_de_Trabalho %>
+                </br>
+                <% ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].each do |day| %>
+                  <%= check_box_tag 'employee[workdays_attributes][0][dayofweek][]', day, workday_fields.object.dayofweek.include?(day) %>
+                  <%= label_tag "employee[workdays_attributes][0][dayofweek][]_#{day}", day %><br>
+                <% end %>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col">
+                  <div class="form-outline">
+                    <%= workday_fields.label :Hora_de_Inicio, class: "form-label" %>
+                  <%= workday_fields.time_field :start, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-outline">
+                  <%= workday_fields.label :Hora_de_Encerramento, class: "form-label" %>
+                  <%= workday_fields.time_field :end, id: 'form7Example1', class: 'form-control', data: { 'timepicker' => true }  %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-outline">
+                  <%= workday_fields.label :Expediente_no_Feriado, class: "form-label" %>
+                  </br>
+                  <%= workday_fields.check_box :holiday, { class: 'form-check-input' } %>
+                </div>
+              </div>
+            </div>
+            <% end %>
+
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <%= form.label :Foto_do_Funcionario, class: "form-label" %>
+              <%= form.file_field :profile_picture, id: 'form7Example3', class: 'form-control' %>
+            </div>
+
+            <div class="d-flex">
+              <div class="form-group mr-2">
+                <%= form.submit 'Cadastrar Funcionário', class: 'btn btn-primary' %>
+              </div>
+
+              <div class="form-group">
+                <%= link_to "Voltar", employees_path, class: 'btn btn-success' %>
+              </div>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+document.addEventListener('turbolinks:load', function() {
+  var input = document.querySelector("#user_phone"); // Certifique-se de substituir "user_phone" pelo ID real do seu campo de telefone
+  var iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
+  });
+
+  // Atualize a bandeira ao carregar a página, se necessário
+  var countryCode = iti.getSelectedCountryData().iso2;
+  document.querySelector("#phone-flag").innerHTML = `<img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/1x1/${countryCode}.svg" alt="${countryCode.toUpperCase()}">`;
+
+  // Atualize a bandeira quando o país for alterado
+  input.addEventListener('countrychange', function() {
+    var countryCode = iti.getSelectedCountryData().iso2;
+    document.querySelector("#phone-flag").innerHTML = `<img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/1x1/${countryCode}.svg" alt="${countryCode.toUpperCase()}">`;
+  });
+});
+</script>
+
+<script>
+function formatPhoneNumber(phone) {
+  const phoneDigits = phone.replace(/\D/g, '');
+  const formattedPhone = `${phoneDigits.slice(0, 2)}-${phoneDigits.slice(2, 11)}`;
+  return formattedPhone;
+}
+
+function handleInputChange() {
+  const inputElement = document.getElementById('phoneNumberInput');
+  const formattedPhoneNumber = formatPhoneNumber(inputElement.value);
+  console.log(formattedPhoneNumber);
+}
+</script>

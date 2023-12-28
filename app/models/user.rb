@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_create :set_default_role
+  before_create :set_default_finance
   enum role: { admin: 'admin', user: 'user'}
 
   has_many :user_lockers
@@ -6,7 +8,6 @@ class User < ApplicationRecord
   has_one :employee #funciona
   has_one :keylocker  # Adicione esta linha
   has_one :address
-  accepts_nested_attributes_for :address
 
 
   #accepts_nested_attributes_for :employees
@@ -34,6 +35,14 @@ class User < ApplicationRecord
   end
 
   private
+
+  def set_default_role
+    self.role ||= 'user'
+  end
+
+  def set_default_finance
+    self.finance ||= 'adimplente'
+  end
 
   def generate_authentication_token
     loop do

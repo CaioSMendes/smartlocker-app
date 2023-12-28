@@ -1,77 +1,168 @@
-<!-- app/views/employees/index.html.erb -->
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-user-tie"></i> Meus Funcionários Admin</h1>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                        <% if current_user.admin? %>
+                        <p>Você é um administrador.</p>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                        <%= link_to "New keylocker", new_keylocker_path %>
+                        <%= link_to "Atribuir locker", user_lockers_path %>
+                        <%= link_to "Ver funconarios", admin_path %>
+                        <% else %>
+                        <p>Você é um usuário regular.</p>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                            <%= link_to "New employee", new_employee_path %>
+                        <% end %>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h1>Lista de Funcionários</h1>
+<p style="color: green"><%= notice %></p>
 
-<% @employees.each do |employee| %>
-  <div id="<%= dom_id employee %>">
-  <p>
-    <strong>Owner:</strong>
-    <%= employee.user.nameCompany || 'N/A' %>
-    <%= employee.user.name || 'N/A' %>
-    <%= employee.user.lastname || 'N/A' %>
-  </p>
+<% if @employees.present? %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 col-lg-9"> 
+        <div class="right_col mt-3" role="main">
+          <div class="row">
+            <% @employees.each do |employee| %>
+              <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card mb-4">
+                </br>
+                    <div class="text-center">
+                        <p>
+                            <% if employee.profile_picture.attached? %>
+                            <%= image_tag employee.profile_picture, size: '288x288' %>
+                            <% else %>
+                            <p>Nenhuma imagem disponível</p>
+                            <% end %>
+                        </p>
+                    </div>
+                <div class="card-body">
+                  <p>
+                    <strong>Nome:</strong>
+                    <%= employee.name %> <%= employee.lastname %>
+                  </p>
 
-    <p>
-      <strong>Name:</strong>
-      <%= employee.name || 'N/A' %>
-    </p>
+                  <p>
+                    <strong>Empresa:</strong>
+                    <%= employee.companyID %>
+                  </p>
 
-    <p>
-      <strong>Lastname:</strong>
-      <%= employee.lastname || 'N/A' %>
-    </p>
+                  <p>
+                    <strong>Telefone:</strong>
+                    <%= employee.phone %>
+                  </p>
 
+                  <p>
+                    <strong>Cargo:</strong>
+                    <%= employee.function %>
+                  </p>
 
-    <!-- Outros detalhes do funcionário -->
+                  <p>
+                    <strong>Meus Lockers:</strong>
+                    <% if employee.keylockers.any? %>
+                        <ul>
+                        <% employee.keylockers.each do |keylocker| %>
+                            <li>
+                            <%= keylocker.nameDevice %> - <%= keylocker.status %>
+                            </li>
+                        <% end %>
+                        </ul>
+                    <% else %>
+                        Nenhum locker associado a esse funcionário.
+                    <% end %>
+                  </p>
 
-    <p>
-      <strong>Keylockers:</strong>
-      <% if employee.keylockers.any? %>
-        <ul>
-          <% employee.keylockers.each do |keylocker| %>
-            <li>
-              <%= keylocker.nameDevice %> - <%= keylocker.status %>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        Nenhum keylocker associado.
-      <% end %>
-    </p>
-
-    <!-- Mais detalhes do funcionário se necessário -->
+                  <div class="text-center mt-3">
+                    <%= link_to employee, class: "btn btn-warning d-inline-block mr-2" do %>
+                      <i class="fa fa-search"></i> Exibir
+                    <% end %>
+                
+                    <%= link_to edit_employee_path(employee), class: "btn btn-success d-inline-block mr-2" do %>
+                        <i class="fa fa-edit"></i> Editar
+                    <% end %>
+                
+                    <%= button_to employee, method: :delete, class: 'btn btn-danger d-inline-block mt-3', title: 'Excluir', id: "delete-btn-#{employee.id}" do %>
+                        <i class="fa fa-trash"></i> Excluir
+                    <% end %>                  
+                  </div>
+                  </br>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <hr>
+<% else %>
+  <div style="text-align: center;">
+    <p>Não existe nenhum funcionário</p>
+  </div>
 <% end %>
 
 
 
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-user-tie"></i> Controle Funcionários x Lockers</h1>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                        <% if current_user.admin? %>
+                        <p>Você é um administrador.</p>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                        <%= link_to "New keylocker", new_keylocker_path %>
+                        <%= link_to "Atribuir locker", user_lockers_path %>
+                        <%= link_to "Ver funconarios", admin_path %>
+                        <% else %>
+                        <p>Você é um usuário regular.</p>
+                        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+                            <%= link_to "New employee", new_employee_path %>
+                        <% end %>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
 Tabela de Employees x Keylockers
 
-<!-- Na sua view de Employee -->
 <h1>Employees and their Associated Lockers</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
-      <th>Locker ID</th>
-      <th>Locker Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @employees.each do |employee| %>
-      <% employee.keylockers.each do |keylocker| %>
-        <tr>
-          <td><%= employee.id %></td>
-          <td><%= employee.name %></td>
-          <td><%= keylocker.id %></td>
-          <td><%= keylocker.nameDevice %></td>
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Locker ID</th>
+            <th>Locker Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @employees.each do |employee| %>
+            <% employee.keylockers.each do |keylocker| %>
+                <tr>
+                <td><%= employee.id %></td>
+                <td><%= employee.name %></td>
+                <td><%= keylocker.id %></td>
+                <td><%= keylocker.nameDevice %></td>
+                </tr>
+            <% end %>
+            <% end %>
+        </tbody>
+    </table>
+</div>

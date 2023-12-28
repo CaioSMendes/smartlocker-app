@@ -1,11 +1,16 @@
 class KeylockersController < ApplicationController
   before_action :set_keylocker, only: %i[ show edit update destroy ]
   #before_action :authenticate_admin_user! # Certifique-se de ter um método de autenticação de admin
+  skip_before_action :verify_authenticity_token, only: [:toggle_and_save_status]
+  skip_before_action :authenticate_user!, only: [:toggle_and_save_status]
 
   # GET /keylockers or /keylockers.json
   def index
-    @keylockers = Keylocker.all
-    @users = User.all
+    if current_user.admin?
+      @keylockers = Keylocker.all.paginate(page: params[:page], per_page: 9)
+    else
+      @keylockers = current_user.keylockers.paginate(page: params[:page], per_page: 9)
+    end
   end
 
   # GET /keylockers/1 or /keylockers/1.json
@@ -74,6 +79,15 @@ class KeylockersController < ApplicationController
     keylocker = Keylocker.find(params[:keylocker_id])
     user.remove_keylocker(keylocker)
     redirect_to users_path, notice: 'Locker removido com sucesso!'
+  end
+
+  def toggle_and_save_status
+    @keylocker = Keylocker.find(params[:id])
+    @keylocker.toggle_and_save_status! # Supondo que você tenha um método correspondente no modelo
+
+    respond_to do |format|
+      format.json { render json: { status: @keylocker.status } }
+    end
   end
 
   private

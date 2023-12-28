@@ -1,99 +1,280 @@
-<h2>Cadastro</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name, autofocus: true %>
-  </div>
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-  <div class="field">
-    <%= f.label :lastname %>
-    <%= f.text_field :lastname, autofocus: true %>
-  </div>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 
-  <div class="field">
-    <%= f.label :nameCompany %>
-    <%= f.text_field :nameCompany, autofocus: true %>
-  </div>
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-  <div class="field">
-    <%= f.label :cnpj %>
-    <%= f.text_field :cnpj, autofocus: true %>
-  </div>
+  .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-  <div class="field">
-    <%= f.label :phone %>
-    <%= f.text_field :phone, autofocus: true %>
-  </div>
+  .logo img {
+    max-width: 250px;
+    height: auto;
+  }
 
-  <%= f.fields_for :address do |ff| %>
-    <div class="field">
-      <%= ff.label :zip_code %>
-      <%= ff.text_field :zip_code, autofocus: true  %>
+  h2 {
+    text-align: center;
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .field input[type="email"],
+  .field input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .actions {
+    text-align: center;
+  }
+
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 10px;
+    }
+  }
+
+  .actions .cadastrar-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff6400;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
+
+
+<div class="text-center">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="logo">
+      <%= image_tag 'logoBsbRFID.png', alt: 'Brasilia RFID', class: 'logo-image' %>
     </div>
+    <h5 class="mb-0">Cadastro</h5>
+    <div class="row">
+      <div class="col-md-8 mb-4 mx-auto">
+        <div class="card mb-4">
+          <div class="card-body">
 
-    <div class="field">
-      <%= ff.label :street %>
-      <%= ff.text_field :street %>
-    </div>
+          <form>
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+              <div class="row mb-4">
 
-    <div class="field">
-      <%= ff.label :city %>
-      <%= ff.text_field :city %>
-    </div>
+                <div class="col">
+                  <div class="form-outline">
+                    <%= form.label :Nome, class: "form-label" %>
+                    <%= form.text_field :name, class: 'form-control' %>
+                  </div>
+                </div>
 
-    <div class="field">
-      <%= ff.label :state %>
-      <%= ff.text_field :state %>
+                <div class="col">
+                  <div class="form-outline">
+                    <%= form.label :Sobrenome, class: "form-label" %>
+                    <%= form.text_field :lastname, class: 'form-control' %>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Text input -->
+              <div class="form-outline mb-4">
+                <%= form.label :Nome_da_Empresa, class: "form-label" %>
+                <%= form.text_field :nameCompany, class: 'form-control' %>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col">
+                  <div class="form-outline">
+                    <%= form.label :Telefone, class: "form-label" %>
+                    <%= form.text_field :phone, class: 'form-control' %>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="form-outline">
+                    <%= form.label :CNPJ, class: "form-label" %>
+                    <%= form.text_field :cnpj, class: 'form-control' %>
+                  </div>
+                </div>
+              </div>
+
+              
+              <form method="get" action=".">
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Codigo_Postal, class: "form-label" %>
+                      <%= form.text_field :zip_code, id: 'cep', class: 'form-control', onblur:"pesquisacep(this.value);" %>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Rua, class: "form-label" %>
+                      <%= form.text_field :street, id: 'rua', onblur:"pesquisacep(this.value);", class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Cidade, class: "form-label" %>
+                      <%= form.text_field :city, id: 'cidade', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Estado, class: "form-label" %>
+                      <%= form.text_field :state, id: 'uf', class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Bairro, class: "form-label" %>
+                      <%= form.text_field :neighborhood, id: 'bairro', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-outline">
+                      <%= form.label :Complemento, class: "form-label" %>
+                      <%= form.text_field :complement, class: 'form-control' %>
+                    </div>
+                  </div>                
+                </div>
+              </form>
+              <!-- Text input -->
+              <div class="form-outline mb-4">
+                <%= form.label :Email, class: "form-label" %>
+                <%= form.email_field :email, class: 'form-control' %>
+              </div>
+
+              <div class="form-outline mb-4">
+              <%= form.label :Senha, class: "form-label" %>
+              <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> caracteres minimo)</em>
+              <% end %><br />
+              <%= form.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+            </div>
+            
+            <div class="form-outline mb-4">
+              <%= form.label :Confirmação_da_senha %><br />
+              <%= form.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+            </div>
+            
+
+            <div class="actions">
+              <%= form.submit "Cadastrar", class: "cadastrar-button" %>
+            </div>
+
+          </form>
+
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
+</div>
 
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<script>
+  function limpa_formulário_cep() {
+          //Limpa valores do formulário de cep.
+          document.getElementById('rua').value=("");
+          document.getElementById('bairro').value=("");
+          document.getElementById('cidade').value=("");
+          document.getElementById('uf').value=("");
+  }
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+  function meu_callback(conteudo) {
+      if (!("erro" in conteudo)) {
+          //Atualiza os campos com os valores.
+          document.getElementById('rua').value=(conteudo.logradouro);
+          document.getElementById('bairro').value=(conteudo.bairro);
+          document.getElementById('cidade').value=(conteudo.localidade);
+          document.getElementById('uf').value=(conteudo.uf);
+      } //end if.
+      else {
+          //CEP não Encontrado.
+          limpa_formulário_cep();
+          alert("CEP não encontrado.");
+      }
+  }
+      
+  function pesquisacep(valor) {
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      //Nova variável "cep" somente com dígitos.
+      var cep = valor.replace(/\D/g, '');
 
-  <%= f.fields_for :address do |ff| %>
-    <div class="input-group input-group-outline my-3">
-      <%= ff.text_field :zipcode, class:"form-control", id:"cep", placeholder:"CEP"%>
-      <button type="button" class="btn btn-primary" id="buscar_cep">Buscar</button>
-    </div>
-  
-    <div class="input-group input-group-outline my-3">
-      <label class="form-label"></label>
-      <%= ff.text_field :street, class:"form-control", id:"rua", placeholder:"Rua" %>                            
-    </div>
-  
-    <div class="input-group input-group-outline my-3">
-      <label class="form-label"></label>            
-      <%= ff.text_field :city, class:"form-control", id:"cidade", placeholder:"Cidade" %>              
-    </div>
-  
-    <div class="input-group input-group-outline my-3">
-      <label class="form-label"></label>
-      <%= ff.text_field :state, class:"form-control", id:"uf", placeholder:"Estado" %>
-    </div>
-  <%end%> 
+      //Verifica se campo cep possui valor informado.
+      if (cep != "") {
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+          //Expressão regular para validar o CEP.
+          var validacep = /^[0-9]{8}$/;
 
-<%= render "devise/shared/links" %>
+          //Valida o formato do CEP.
+          if(validacep.test(cep)) {
+
+              //Preenche os campos com "..." enquanto consulta webservice.
+              document.getElementById('rua').value="...";
+              document.getElementById('bairro').value="...";
+              document.getElementById('cidade').value="...";
+              document.getElementById('uf').value="...";
+
+              //Cria um elemento javascript.
+              var script = document.createElement('script');
+
+              //Sincroniza com o callback.
+              script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+              //Insere script no documento e carrega o conteúdo.
+              document.body.appendChild(script);
+
+          } //end if.
+          else {
+              //cep é inválido.
+              limpa_formulário_cep();
+              alert("Formato de CEP inválido.");
+          }
+      } //end if.
+      else {
+          //cep sem valor, limpa formulário.
+          limpa_formulário_cep();
+      }
+  };
+</script>
+
+

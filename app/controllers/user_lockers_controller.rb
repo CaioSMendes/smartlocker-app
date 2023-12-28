@@ -1,10 +1,10 @@
 # app/controllers/user_lockers_controller.rb
 class UserLockersController < ApplicationController
-  before_action :authenticate_admin_user!
+  before_action :authenticate_admin!
 
   def index
     @users = User.all
-    @keylockers = Keylocker.all
+    @keylockers = Keylocker.all.paginate(page: params[:page], per_page: 10)
   end
 
   def assign_keylocker
@@ -12,9 +12,9 @@ class UserLockersController < ApplicationController
     keylocker = Keylocker.find(params[:keylocker_id])
     if @user && keylocker
       @user.keylockers << keylocker
-      redirect_to keylockers_path, notice: 'Keylocker atribuído ao usuário com sucesso.'
+      redirect_to user_lockers_path, notice: 'Locker atribuído ao usuário com sucesso.'
     else
-      redirect_to keylockers_path, alert: 'Falha ao atribuir Keylocker ao usuário.'
+      redirect_to user_lockers_path, alert: 'Falha ao atribuir locker ao usuário.'
     end
   end
 
@@ -31,16 +31,20 @@ class UserLockersController < ApplicationController
 
     if @user && keylocker
       @user.keylockers.delete(keylocker)
-      redirect_to keylockers_path, notice: 'Keylocker removido do usuário com sucesso.'
+      redirect_to user_lockers_path, notice: 'Locker removido do usuário com sucesso.'
     else
-      redirect_to keylockers_path, alert: 'Falha ao remover Keylocker do usuário.'
+      redirect_to user_lockers_path, alert: 'Falha ao remover locker do usuário.'
     end
   end
 
   private
 
-  def authenticate_admin_user!
-    # Adicione lógica para verificar se o usuário é um administrador.
-    # Você pode usar Devise's current_user ou outra lógica personalizada.
+  private
+
+  def authenticate_admin!
+    unless current_user.admin?
+      flash[:alert] = "Acesso não autorizado."
+      redirect_to root_path
+    end
   end
 end
