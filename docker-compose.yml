@@ -1,14 +1,24 @@
+version: '3'
 services:
-  smartlocker-app:
-    container_name: smartlocker-app
-    image: caio96k/smartlocker-app:1.0
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    restart: always
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - .:/myapp
     ports:
       - "3000:3000"
-    volumes:
-      - /media/2tera/aplicativos/smartlocker-app/app:/app
-      - /media/2tera/aplicativos/smartlocker-app/bundle:/usr/local/bundle
-    environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWD: postgres
-        POSTGRES_HOST: database
-    command: ["bash", "-c", "bundle install && rails server -b 0.0.0.0"]
+    depends_on:
+      - db
+volumes:
+  postgres_volume:

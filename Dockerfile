@@ -10,10 +10,18 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev nodejs
 
 # Criação do diretório de trabalho
-WORKDIR /app
+RUN mkdir /Smartlocker
+WORKDIR /Smartlocker
 
 # Copia os arquivos do aplicativo para o contêiner
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile /Smartlocker/Gemfile
+COPY Gemfile.lock /Smartlocker/Gemfile.lock
+#COPY Gemfile Gemfile.lock ./
+RUN bundle install
+COPY . /Smartlocker
+COPY entrypoint.sh /usr/bin/entrypoint
+
+RUN chmod +x /usr/bin/entrypoint
 
 # Instalação das gemas e das dependências do aplicativo
 RUN gem install bundler && bundle install --jobs 20 --retry 5
@@ -23,6 +31,9 @@ RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 # Exponha a porta 3000 (ou a porta que você está usando)
 EXPOSE 3000
+
+# Defina o script de entrada como o comando padrão
+ENTRYPOINT ["entrypoint"]
 
 # Comando para iniciar o servidor Rails
 CMD ["rails", "server", "-b", "0.0.0.0"]
