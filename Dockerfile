@@ -34,4 +34,5 @@ COPY . .
 EXPOSE 3000
 
 # Executa o script entrypoint.sh após o comando rails server
-CMD ["sh", "-c", "rails server -b 0.0.0.0"]
+#CMD ["sh", "-c", "rails server -b 0.0.0.0"]
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"]
