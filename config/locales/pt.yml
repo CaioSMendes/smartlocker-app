@@ -1,7 +1,6 @@
-# config/locales/pt.yml
 pt:
   date:
-    day_names: 
+    day_names:
       - Domingo
       - Segunda
       - Terça
@@ -9,3 +8,8 @@ pt:
       - Quinta
       - Sexta
       - Sábado
+
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "O registro não é válido"
