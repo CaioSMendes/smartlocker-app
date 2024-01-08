@@ -1,12 +1,17 @@
 #!/bin/bash
+set -e
 
-# Configurações ou comandos anteriores, se necessário
+# Remover o pid do servidor caso exista
+rm -f /app/tmp/pids/server.pid
 
-# Executa as migrações do banco de dados
+# Executar o comando para criar o banco de dados
+bundle exec rails db:create
+
+# Executar o comando para migrar o banco de dados
 bundle exec rails db:migrate
 
-# Executa o seed do banco de dados
+# Executar o comando para popular o banco de dados (se necessário)
 bundle exec rails db:seed
 
-# Inicia o servidor Rails
-bundle exec rails server -b 0.0.0.0
+# Executar o comando passado como argumento ou iniciar o servidor por padrão
+exec "$@"
