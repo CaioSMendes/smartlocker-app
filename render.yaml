@@ -1,6 +1,6 @@
 databases:
   - name: smartlocker-app
-    database: smartlocker-db
+    databaseName: smartlocker
     user: caio
     plan: free
 
