@@ -11,5 +11,10 @@ pt:
 
   activerecord:
     errors:
+      models:
+        keylocker:
+          attributes:
+            owner:
+              taken: "já está em uso"
       messages:
         record_invalid: "O registro não é válido"

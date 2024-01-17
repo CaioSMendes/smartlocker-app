@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <ol class="breadcrumb">
                     <li class="active">
-                        <h1><i class="fas fa-user-tie"></i> Meu Funcionário</h1>
+                        <h1><i class="fas fa-user-tie"></i> Meu Colaborador</h1>
                     </li>
                 </ol>
             </div>
@@ -21,16 +21,14 @@
         <div class="row">
 
           <div class="col-md-3">
-            <% if @employee.profile_picture.attached? %>
+            <% if @employee&.profile_picture&.attached? %>
               <%= image_tag @employee.profile_picture, class: "img-fluid rounded", style: "max-width: 100%;" %>
             <% else %>
-              <p>Nenhuma imagem disponível</p>
+              <%= image_tag "user.png", class: "img-fluid rounded", style: "max-width: 100%;" %>
             <% end %>
           </div>
 
           <div class="col-md-9">
-            <p style="color: green"><%= notice %></p>
-
             <p>
               <strong>Nome:</strong>
               <%= @employee.name %> <%= @employee.lastname %>

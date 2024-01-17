@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   def index
+    puts "Endereço IP do Host do PostgreSQL: #{ENV['POSTGRES_IP']}"
     @admin_lockers_count = Keylocker.count # Quantidade total de lockers para o administrador
 
     if current_user.admin?

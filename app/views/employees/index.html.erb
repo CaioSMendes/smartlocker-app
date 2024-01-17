@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <ol class="breadcrumb">
                     <li class="active">
-                        <h1><i class="fas fa-user-tie"></i> Meus Funcionários</h1>
+                        <h1><i class="fas fa-user-tie"></i> Meus Colaboradores</h1>
                     </li>
                 </ol>
             </div>
@@ -18,7 +18,7 @@
                        
     <% else %>
     <%= link_to new_employee_path, class: "btn btn-primary mt-3" do %>
-        <i class="fa fa-plus"></i> Cadastrar Novo Funcionário
+        <i class="fa fa-plus"></i> Cadastrar Novo Colaborador
     <% end %>                 
 <% end %>
 
@@ -37,7 +37,7 @@
                             <% if employee.profile_picture.attached? %>
                             <%= image_tag employee.profile_picture, size: '288x288' %>
                             <% else %>
-                            <p>Nenhuma imagem disponível</p>
+                            <%= image_tag "user.png", size: '288x288' %>
                             <% end %>
                         </p>
                     </div>
