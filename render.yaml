@@ -1,12 +1,12 @@
 databases:
   - name: smartlocker-app
-    databaseName: mysite
-    user: mysite
+    databaseName: smartlocker-app
+    user: caio
     plan: free
 
 services:
   - type: web
-    name: mysite
+    name: smartlocker-app
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
