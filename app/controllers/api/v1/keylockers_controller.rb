@@ -2,8 +2,9 @@
 module Api
     module V1
       class KeylockersController < ApplicationController
-        skip_before_action :verify_authenticity_token, only: [:new, :create, :update]
-        skip_before_action :authenticate_user!, only: [:new, :create, :update]
+        before_action :set_keylocker, only: [:show]
+        skip_before_action :verify_authenticity_token, only: [:index, :new, :create, :update, :show]
+        skip_before_action :authenticate_user!, only: [:index, :new, :create, :update, :show]
         protect_from_forgery with: :null_session
 
         # GET /keylockers or /keylockers.json
@@ -20,7 +21,7 @@ module Api
 
         # GET /keylockers/1 or /keylockers/1.json
         def show
-          render json: @keylocker
+          render json: @keylocker.as_json(only: [:id, :owner, :nameDevice, :ipAddress, :status])
         end
 
       
